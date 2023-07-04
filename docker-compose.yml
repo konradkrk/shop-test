@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql-phpmyadmin
+  db-test:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    ports:
+      - "3307:3306"
+  phpmyadmin:
+    depends_on:
+      - mysql
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8081:80
+    networks:
+      - mysql-phpmyadmin
+
+
+networks:
+  mysql-phpmyadmin:
