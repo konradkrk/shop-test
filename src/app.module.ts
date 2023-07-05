@@ -8,11 +8,11 @@ import { ProductModule } from './product/product.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
+      host: 'sql74.lh.pl',
       port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
+      username: 'serwer128975_testy',
+      password: 'Konrad1!',
+      database: 'serwer128975_testy',
       autoLoadEntities: true,
       synchronize: true,
     }),
