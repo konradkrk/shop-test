@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/order/enties/order.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -20,4 +20,13 @@ export class User {
 
   @Column({ default: false })
   isActive: boolean;
+
+  @Column('int')
+  created_at: number;
+
+  @Column({ default: null })
+  modified_at: number;
+
+  @OneToMany(() => Order, (order) => order.id)
+  order: Order[]
 }

@@ -9,11 +9,12 @@ import {
   HttpException,
   HttpStatus,
   Patch,
+  Put,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation } from '@nestjs/swagger';
 import { StatusUserDto } from './dto/status-user.dto';
 
 @Controller('users')
@@ -41,16 +42,32 @@ export class UsersController {
   @Patch('activate-user/:id')
   @ApiOperation({ summary: 'Aktywowanie uzytkownika', description: '', tags: ['User'] })
   async activate(@Param('id', ParseIntPipe) id: number, @Body() statusUserDto: StatusUserDto): Promise<void> {
-    let user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOne(id);
+
+    if(!user) {
+      throw new HttpException('Nie znaleziono uzytkownika', HttpStatus.NOT_FOUND);
+    }
 
     user.isActive = statusUserDto.activate
-    return this.usersService.changeStatus(id, user);
+    return this.usersService.update(id, user);
+  }
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Update nowego produktu', description: '', tags: ['User'] })
+  async update(@Param('id', ParseIntPipe) id: number, @Body() createUserDto: CreateUserDto): Promise<void> {
+
+    const user = await this.usersService.findOne(id);
+
+    if(!user) {
+      throw new HttpException('Nie znaleziono uzytkownika', HttpStatus.NOT_FOUND);
+    }
+
+    return this.usersService.update(id, {...user, ...createUserDto});
   }
 
   @Get()
   @ApiOperation({ summary: 'Pobieranie wszystkich uzytkownikow', description: '', tags: ['User'] })
   findAll(): Promise<User[]> {
-    console.log('get');
     return this.usersService.findAll();
   }
 

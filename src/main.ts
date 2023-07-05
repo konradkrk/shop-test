@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { CreateProductDto } from './product/dto/create-product.dto';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,7 +14,9 @@ async function bootstrap() {
   .addBearerAuth()
   .build();
 
-  const document = SwaggerModule.createDocument(app, options);
+  const document = SwaggerModule.createDocument(app, options, {
+    extraModels: [CreateProductDto]}
+  );
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);

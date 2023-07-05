@@ -1,66 +1,57 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Max, Min } from 'class-validator';
-import { Order } from 'src/order/enties/order.entity';
-import { OneToMany } from 'typeorm';
+import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
+import { IsArray, IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
+import { Product } from 'src/product/enties/product.entity';
+import { OrderStatus } from '../enums/order.enum';
 
-export class CreateUserDto {
+export class CreateOrderDto {
+
   @IsNotEmpty()
-  @IsEmail()
   @ApiProperty({
+    example: '1',
+    type: Number,
+    required: true,
+  })
+  user_id: number;
+
+  @IsNotEmpty()
+  @Min(3)
+  @Max(255)
+  @IsString()
+  @ApiProperty({
+    example: 'nowe',
+    name: 'status',
+    enum: OrderStatus,
+    required: true,
+  })
+  status: OrderStatus;
+
+  @IsInt()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: '455',
+    type: Number,
+    description: 'Cena w groszach np 455 to 4.55',
     nullable: false,
-    example: 'ilona@najlepszaKobietaNaSwiecie.com',
-    pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
-    type: 'string',
   })
-  email: string;
+  total: number;
 
   @IsNotEmpty()
-  @Min(1)
-  @Max(20)
-  @IsString()
+  @IsArray()
   @ApiProperty({
-    example: 'Ilona',
-    minLength: 1,
-    maxLength: 20,
+    type: 'array',
     required: true,
+    example: [{productId: 2, price: 2345, quantity: 3}, {productId: 1, price: 2345, quantity: 3}],
+    description: 'Pamiętaj musisz podać tablicę obiektów. W tablicy mają się znaleźć obiekty z productId, price oraz ilośćią {productId: 2, price: 234, quantity: 1}  ',
   })
-  firstName: string;
+  productList: {productId: number, price: number, quantity: number}[];
 
-  @IsOptional()
-  @IsString()
-  @Min(1)
-  @Max(20)
-  @ApiProperty({
-    example: 'Sejbuk',
-    nullable: true,
-    minLength: 1,
-    maxLength: 20,
-  })
-  lastName: string;
-
-  @IsNotEmpty()
-  @Min(1)
-  @Max(20)
-  @IsString()
-  @ApiProperty({
-    minLength: 1,
-    maxLength: 20,
-    required: true,
-  })
-  password: string;
-
-  @IsNotEmpty()
-  @Min(1)
-  @Max(20)
-  @IsString()
-  @ApiProperty({
-    minLength: 1,
-    maxLength: 20,
-    required: true,
-  })
-  confirmPassword: string;
 }
 
+// id: number;
+// name: string;
+// price: number;
+// description: string;
+// quantity: number;
 
 // nullable?: boolean;
 // discriminator?: DiscriminatorObject;
