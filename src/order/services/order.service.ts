@@ -45,6 +45,11 @@ export class OrderService {
         return this.ordersRepository.findOneBy({ id });
     }
 
+    findByUser(id: number): Promise<Order> {
+        return this.ordersRepository.findOneBy({ id });
+    }
+    
+
     async remove(id: number): Promise<void> {
         await this.ordersRepository.delete(id);
     }

@@ -1,5 +1,5 @@
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { IsArray, IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
+import { IsArray, IsInt, IsNotEmpty, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 import { Product } from 'src/product/enties/product.entity';
 import { OrderStatus } from '../enums/order.enum';
 
@@ -14,8 +14,8 @@ export class CreateOrderDto {
   user_id: number;
 
   @IsNotEmpty()
-  @Min(3)
-  @Max(255)
+  @MinLength(3)
+  @MaxLength(255)
   @IsString()
   @ApiProperty({
     example: 'nowe',

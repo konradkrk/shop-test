@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 import { Order } from 'src/order/enties/order.entity';
 import { OneToMany } from 'typeorm';
 
@@ -39,8 +39,8 @@ export class CreateUserDto {
   lastName: string;
 
   @IsNotEmpty()
-  @Min(1)
-  @Max(20)
+  @MinLength(1)
+  @MaxLength(20)
   @IsString()
   @ApiProperty({
     minLength: 1,
@@ -50,8 +50,8 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  @Min(1)
-  @Max(20)
+  @MinLength(1)
+  @MaxLength(20)
   @IsString()
   @ApiProperty({
     minLength: 1,
