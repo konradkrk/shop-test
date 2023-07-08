@@ -8,7 +8,7 @@ import { User } from './../users/user.entity';
 import { AuthService } from './auth.service';
 import { ApiOperation } from '@nestjs/swagger';
 
-@Controller('users')
+@Controller('login')
 export class UsersController {
   constructor(private readonly authService: AuthService) {}
 
