@@ -18,6 +18,7 @@ export class AuthDto {
   @ApiProperty({
     minLength: 1,
     maxLength: 20,
+    example: 'tajne haslo',
     required: true,
   })
   password: string;
