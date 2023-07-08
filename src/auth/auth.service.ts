@@ -10,8 +10,8 @@ export class AuthService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  findOne(email: string, password: string): Promise<User> {
-    return this.usersRepository.findOneBy({ email, password });
+  async findOne(email: string, password: string): Promise<User> {
+    return await this.usersRepository.findOneBy({ email, password });
   }
 
 }

@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Post,
 } from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
@@ -15,8 +17,14 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'Logowanie', description: '', tags: ['Auth'] })
 
-  create(@Body() authDto: AuthDto): Promise<User> {
-    return this.authService.findOne(authDto.email, authDto.password);
+  async create(@Body() authDto: AuthDto): Promise<User> {
+    const user = await this.authService.findOne(authDto.email, authDto.password);
+
+    if(!user) {
+      throw new HttpException('email lub hasło nipoprawne', HttpStatus.UNAUTHORIZED)
+    }
+
+    return user;
   }
 
 }

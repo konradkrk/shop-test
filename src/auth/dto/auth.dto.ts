@@ -12,8 +12,6 @@ export class AuthDto {
   email: string;
 
   @IsNotEmpty()
-  @Min(1)
-  @Max(20)
   @IsString()
   @ApiProperty({
     minLength: 1,
