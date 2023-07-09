@@ -24,6 +24,7 @@ export class ProductController {
     @Post()
     @ApiOperation({ summary: 'Dodawanie nowego produktu', description: '', tags: ['Product'] })
     create(@Body() createProductDto: CreateProductDto): Promise<Product> {
+      createProductDto.quantity = 0;
         return this.productService.create(createProductDto);
     }
 
