@@ -15,8 +15,6 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @Min(1)
-  @Max(20)
   @IsString()
   @ApiProperty({
     example: 'Ilona',
@@ -28,8 +26,6 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
-  @Min(1)
-  @Max(20)
   @ApiProperty({
     example: 'Sejbuk',
     nullable: true,
